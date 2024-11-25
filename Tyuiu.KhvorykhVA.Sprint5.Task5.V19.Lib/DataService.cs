@@ -8,27 +8,51 @@ namespace Tyuiu.KhvorykhVA.Sprint5.Task5.V19.Lib
     {
         public double LoadFromDataFile(string path)
         {
-            double res = 0;
-            var culture = new CultureInfo("ru-RU"); 
+            double result = 0; 
+            var numbers = new System.Collections.Generic.List<int>(); 
 
-            using (StreamReader reader = new StreamReader(path))
+            try
             {
-                string line = reader.ReadLine();
-                if (line != null)
-                {
-                    string[] parts = line.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
 
-                    if (parts.Length >= 2)
+                using (StreamReader reader = new StreamReader(path))
+                {
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
                     {
-                        if (double.TryParse(parts[0], NumberStyles.Float, culture, out double firstNumber) &&
-                            double.TryParse(parts[1], NumberStyles.Float, culture, out double secondNumber))
+
+                        string[] parts = line.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+
+                        foreach (var part in parts)
                         {
-                            res = firstNumber + secondNumber; 
+                            if (int.TryParse(part, out int number) && number >= -9 && number <= 9)
+                            {
+                                numbers.Add(number); 
+                            }
                         }
                     }
                 }
+
+                if (numbers.Count > 0)
+                {
+                    int max = numbers.Max(); 
+                    int min = numbers.Min(); 
+
+                    Console.WriteLine($"Максимум: {max}, Минимум: {min}");
+
+                    result = max - min; 
+                    result = Math.Round(result, 3); 
+                }
+                else
+                {
+                    Console.WriteLine("В файле нет однозначных целых чисел.");
+                }
             }
-            return res;
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ошибка: {ex.Message}");
+            }
+
+            return result;
         }
     }
 }
