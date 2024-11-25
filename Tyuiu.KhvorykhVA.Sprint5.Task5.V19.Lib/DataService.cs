@@ -15,13 +15,19 @@ namespace Tyuiu.KhvorykhVA.Sprint5.Task5.V19.Lib
                 string line;
                 while ((line = reader.ReadLine()) != null)
                 {
-                    if (double.TryParse(line, NumberStyles.Float, culture, out double number))
+                    string[] parts = line.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    foreach (var part in parts)
                     {
-                        res += number;
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Некорректная строка: {line}");
+                        if (double.TryParse(part, NumberStyles.Float, culture, out double number))
+                        {
+                            res += number;
+                        }
+                        else
+                        {
+
+                            Console.WriteLine($"Некорректная строка или число: {part}");
+                        }
                     }
                 }
             }
