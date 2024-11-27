@@ -7,7 +7,8 @@ namespace Tyuiu.KhvorykhVA.Sprint5.Task3.V5
     {
         static void Main(string[] args)
         {
-            DataService dataService = new DataService();
+            DataService ds = new DataService();
+
             Console.Title = "Спринт #5 | Выполнил: Хворых В.А  | АСОиУБ-24-1";
 
             Console.WriteLine("***************************************************************************");
@@ -26,18 +27,14 @@ namespace Tyuiu.KhvorykhVA.Sprint5.Task3.V5
             Console.WriteLine("***************************************************************************");
 
 
-            int x = 2; 
-            Console.WriteLine("x = " + x);
             Console.WriteLine("***************************************************************************");
             Console.WriteLine("* РЕЗУЛЬТАТ:                                                              *");
             Console.WriteLine("***************************************************************************");
 
-            
-            string filePath = dataService.SaveToFileTextData(x);
+            string res = ds.SaveToFileTextData(2);
 
-            Console.WriteLine("Файл: " + filePath);
-            Console.WriteLine("Результат успешно сохранён!");
-            Console.ReadKey();
+            Console.WriteLine("Файл: " + res);
+            Console.WriteLine("Создан");
         }
     }
 }

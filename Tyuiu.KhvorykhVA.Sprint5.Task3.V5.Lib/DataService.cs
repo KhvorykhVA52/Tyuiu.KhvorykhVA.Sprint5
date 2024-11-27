@@ -6,18 +6,14 @@ namespace Tyuiu.KhvorykhVA.Sprint5.Task3.V5.Lib
     {
         public string SaveToFileTextData(int x)
         {
-            string path = Path.Combine(Path.GetTempPath(), "OutPutFileTask3.txt");
-
-
-            if (File.Exists(path))
+            string outputFilePath = Path.Combine(Path.GetTempPath(), "OutPutFileTask3.bin");
+            using (FileStream fs = new FileStream(outputFilePath, FileMode.Create))
+            using (BinaryWriter writer = new BinaryWriter(fs))
             {
-                File.Delete(path);
+                writer.Write(2 * Math.Pow(x, 3) + 0.5 * Math.Pow(x, 2) - 3.5 * x + 2);
+
             }
-
-            int z = 2 * (x * x * x) + (x * x / 2) - (7 * x / 2) + 2;
-
-            File.WriteAllText(path, z.ToString());
-            return path;
+            return outputFilePath;
         }
     }
 }

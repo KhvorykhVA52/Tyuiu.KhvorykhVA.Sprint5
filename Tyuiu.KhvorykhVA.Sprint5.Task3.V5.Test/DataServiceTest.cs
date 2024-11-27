@@ -8,7 +8,7 @@ namespace Tyuiu.KhvorykhVA.Sprint5.Task3.V5.Test
         [TestMethod]
         public void SaveToFileTextData()
         {
-            string path = @"C:\Users\User\AppData\Local\Temp\OutPutFileTask3.txt";
+            string path = @"C:\Users\User\AppData\Local\Temp\OutPutFileTask3.bin";
             FileInfo fileinfo = new FileInfo(path);
             bool fileExists = fileinfo.Exists;
             bool wait = true;
