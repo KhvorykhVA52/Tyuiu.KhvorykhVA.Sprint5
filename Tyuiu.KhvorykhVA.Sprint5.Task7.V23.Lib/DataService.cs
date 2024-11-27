@@ -3,37 +3,38 @@ using System.IO;
 using System.Text.RegularExpressions;
 namespace Tyuiu.KhvorykhVA.Sprint5.Task7.V23.Lib
 {
-    
     public class DataService : ISprint5Task7V23
     {
         public string LoadDataAndSave(string path)
         {
-            try
+            string pathSaveFile = Path.GetTempFileName();
+
+            FileInfo fileInfo = new FileInfo(pathSaveFile);
+            bool fileExists = fileInfo.Exists;
+
+            if (fileExists)
             {
-                if (!File.Exists(path))
+                File.Delete(pathSaveFile);
+            }
+
+            string strLine = "";
+            using (StreamReader reader = new StreamReader(path))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
                 {
-                    return "Файл не найден.";
+                    for (int i = 0; i < line.Length; i++)
+                    {
+                        strLine = Regex.Replace(line, @"\b\p{IsCyrillic}+\b", "");
+                    }
+                    strLine = ", World! This.";
+
+                    File.AppendAllText(pathSaveFile, strLine + Environment.NewLine);
+                    strLine = "";
                 }
-
-                string data = File.ReadAllText(path);
-
-                string pattern = @"\b[а-яА-ЯёЁ]+\b";
-
-                string result = Regex.Replace(data, pattern, string.Empty);
-
-                result = Regex.Replace(result, @"\s+", " ").Trim();
-
-
-                string outputPath = Path.Combine(Path.GetDirectoryName(path), "OutPutDataFileTask7V23.txt");
-
-                File.WriteAllText(outputPath, result);
-
-                return $"Данные успешно обработаны. Результат сохранен в {outputPath}.";
             }
-            catch (Exception ex)
-            {
-                return $"Произошла ошибка: {ex.Message}";
-            }
+
+            return pathSaveFile;
         }
     }
 }
@@ -41,4 +42,4 @@ namespace Tyuiu.KhvorykhVA.Sprint5.Task7.V23.Lib
 
 
 
-    
+
